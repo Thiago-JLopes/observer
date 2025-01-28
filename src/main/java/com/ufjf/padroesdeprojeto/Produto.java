@@ -13,6 +13,7 @@ public class Produto extends Observable {
         this.quantidade = quantidade;
         this.estado = ProdutoEstadoDisponivel.getInstance();
     }
+
     public void setEstado(ProdutoEstado estado) {
         this.estado = estado;
     }
@@ -45,15 +46,21 @@ public class Produto extends Observable {
         return estado;
     }
 
+    public int getQuantidade() {
+        return quantidade;
+    }
+
     public void setQuantidade(int quantidade) {
         if (quantidade < 0) {
             throw new IllegalArgumentException("Quantidade não pode ser negativa.");
         }
 
         this.quantidade = quantidade;
-        if (this.quantidade > 0) {
+
+        // Notificar os observadores apenas quando a quantidade mudar para maior que zero
+        if (this.quantidade >= 0) {
             setChanged();
-            notifyObservers();
+            notifyObservers(this);
         }
     }
 
@@ -62,6 +69,7 @@ public class Produto extends Observable {
         return "Produto{" +
                 "nome='" + nome + '\'' +
                 ", quantidade=" + quantidade +
+                ", estado='" + estado.getEstado() + '\'' +
                 '}';
     }
 }

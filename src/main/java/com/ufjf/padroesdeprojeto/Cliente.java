@@ -22,7 +22,13 @@ public class Cliente implements Observer {
 
     @Override
     public void update(Observable produto, Object arg) {
-        this.ultimaNotificacao = this.nome + ", o produto " + produto.toString() + " está disponível!";
-        System.out.println(this.ultimaNotificacao);
+        if (produto instanceof Produto) {
+            Produto p = (Produto) produto;
+            this.ultimaNotificacao = String.format(
+                    "%s, o produto '%s' está disponível com quantidade %d. Estado atual: %s",
+                    this.nome, p.getNome(), p.getQuantidade(), p.getNomeEstado()
+            );
+            //System.out.println(this.ultimaNotificacao);
+        }
     }
 }
