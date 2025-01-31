@@ -16,19 +16,18 @@ public class Cliente implements Observer {
         return this.ultimaNotificacao;
     }
 
-    public void cadastrar(Produto produto) {
-        produto.addObserver(this);
+    public void cadastrar(Pedido pedido) {
+        pedido.addObserver(this);
     }
 
     @Override
-    public void update(Observable produto, Object arg) {
-        if (produto instanceof Produto) {
-            Produto p = (Produto) produto;
+    public void update(Observable pedido, Object arg) {
+        if (pedido instanceof Pedido) {
+            Pedido p = (Pedido) pedido;
             this.ultimaNotificacao = String.format(
-                    "%s, o produto '%s' está disponível com quantidade %d. Estado atual: %s",
-                    this.nome, p.getNome(), p.getQuantidade(), p.getNomeEstado()
+                    "%s, o pedido '%s' mudou para o estado: %s",
+                    this.nome, p.getNumeroPedido(), p.getEstadoAtual()
             );
-            //System.out.println(this.ultimaNotificacao);
         }
     }
 }
